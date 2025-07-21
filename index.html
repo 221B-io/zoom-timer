@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com 'unsafe-inline'; media-src https:; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; media-src https:; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="no-referrer">
   <title>Zoom Timer with Custom Song</title>
-  <script src="https://unpkg.com/@zoom/zoom-apps-sdk@0.16.11/dist/zoomus-websdk.umd.min.js"></script>
+  <script src="https://unpkg.com/@zoom/zoom-apps-sdk@latest/dist/zoomus-websdk.umd.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -60,89 +60,6 @@
   <button onclick="stopTimer()">Stop Timer</button>
   <div id="timerDisplay">00:00</div>
   <div id="status"></div>
-
-  <script>
-    let timer;
-    let timeLeft;
-    let audio;
-
-    // Initialize Zoom Apps SDK
-    zoomSdk.config({
-      capabilities: [
-        "notifyAppEvent"
-      ]
-    }).then(() => {
-      console.log("Zoom SDK Initialized");
-    }).catch(err => {
-      console.error("Zoom SDK Initialization Failed:", err);
-      document.getElementById("status").textContent = "Error initializing Zoom SDK";
-    });
-
-    function setPreset(seconds) {
-      document.getElementById("timeInput").value = seconds;
-    }
-
-    function startTimer() {
-      const timeInput = document.getElementById("timeInput").value;
-      const audioUrl = document.getElementById("audioUrl").value;
-
-      if (!timeInput || timeInput <= 0) {
-        document.getElementById("status").textContent = "Please enter a valid time";
-        return;
-      }
-      if (!audioUrl) {
-        document.getElementById("status").textContent = "Please enter a valid audio URL";
-        return;
-      }
-
-      // Stop any existing timer and audio
-      stopTimer();
-
-      // Initialize audio
-      audio = new Audio(audioUrl);
-      audio.onerror = () => {
-        document.getElementById("status").textContent = "Error loading audio URL";
-      };
-
-      // Set timer
-      timeLeft = parseInt(timeInput);
-      updateTimerDisplay;();
-      timer = setInterval(() => {
-        timeLeft--;
-        updateTimerDisplay();
-        if (timeLeft <= 0) {
-          clearInterval(timer);
-          document.getElementById("status").textContent = "Timer finished! Playing song...";
-          audio.play().catch(err => {
-            document.getElementById("status").textContent = "Error playing audio: " + err.message;
-          });
-          // Notify Zoom app event
-          zoomSdk.callZoomApi("notifyAppEvent", {
-            event: "timer_finished",
-            data: { message: "Timer reached zero and audio played" }
-          });
-        }
-      }, 1000);
-    }
-
-    function stopTimer() {
-      if (timer) {
-        clearInterval(timer);
-        document.getElementById("status").textContent = "Timer stopped";
-      }
-      if (audio) {
-        audio.pause();
-        audio.currentTime = 0;
-      }
-      updateTimerDisplay();
-    }
-
-    function updateTimerDisplay() {
-      const minutes = Math.floor(timeLeft / 60);
-      const seconds = timeLeft % 60;
-      document.getElementById("timerDisplay").textContent = 
-        `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
