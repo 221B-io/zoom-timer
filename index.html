@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; media-src https:; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; media-src https:; style-src 'self'; object-src 'none'">
   <meta name="referrer" content="no-referrer">
   <title>Zoom Timer with Custom Song</title>
   <script src="https://unpkg.com/@zoom/zoom-apps-sdk@latest/dist/zoomus-websdk.umd.min.js"></script>
@@ -49,17 +49,17 @@
     <input type="number" id="timeInput" min="1" value="60">
   </div>
   <div class="preset-buttons">
-    <button onclick="setPreset(120)">2 Minutes</button>
-    <button onclick="setPreset(60)">1 Minute</button>
+    <button id="preset2Min">2 Minutes</button>
+    <button id="preset1Min">1 Minute</button>
   </div>
   <div>
     <label for="audioUrl">Audio URL (MP3):</label>
     <input type="text" id="audioUrl" placeholder="Enter public MP3 URL" value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
   </div>
-  <button onclick="startTimer()">Start Timer</button>
-  <button onclick="stopTimer()">Stop Timer</button>
+  <button id="startTimer">Start Timer</button>
+  <button id="stopTimer">Stop Timer</button>
   <div id="timerDisplay">00:00</div>
-  <div id="status"></div>
+  3<div id="status">Loading app...</div>
   <script src="script.js"></script>
 </body>
 </html>
