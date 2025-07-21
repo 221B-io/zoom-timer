@@ -1,26 +1,55 @@
+console.log("script.js loaded");
+
+// Initialize variables
 let timer;
 let timeLeft;
 let audio;
 
-// Initialize Zoom Apps SDK
-zoomSdk.config({
-  capabilities: [
-    "notifyAppEvent"
-  ]
-}).then(() => {
-  console.log("Zoom SDK Initialized Successfully");
-}).catch(err => {
-  console.error("Zoom SDK Initialization Failed:", err);
-  document.getElementById("status").textContent = "Error initializing Zoom SDK: " + err.message;
-});
+// Update status on page load
+document.getElementById("status").textContent = "App loaded, waiting for Zoom SDK...";
+
+// Function to initialize Zoom SDK with retry
+function initializeZoomSdk(attempts = 5, delay = 1000) {
+  if (typeof zoomSdk === "undefined") {
+    if (attempts > 0) {
+      console.warn(`Zoom SDK not available, retrying (${attempts} attempts left)...`);
+      setTimeout(() => initializeZoomSdk(attempts - 1, delay), delay);
+    } else {
+      console.error("Zoom SDK not available after retries");
+      document.getElementById("status").textContent = "Error: Zoom SDK not available. Are you running this in Zoom?";
+    }
+    return;
+  }
+
+  zoomSdk.config({
+    capabilities: ["notifyAppEvent"]
+  }).then(() => {
+    console.log("Zoom SDK Initialized Successfully");
+    document.getElementById("status").textContent = "Ready to start timer";
+  }).catch(err => {
+    console.error("Zoom SDK Initialization Failed:", err);
+    document.getElementById("status").textContent = "Error initializing Zoom SDK: " + err.message;
+  });
+}
+
+// Attach event listeners
+document.getElementById("preset2Min").addEventListener("click", () => setPreset(120));
+document.getElementById("preset1Min").addEventListener("click", () => setPreset(60));
+document.getElementById("startTimer").addEventListener("click", startTimer);
+document.getElementById("stopTimer").addEventListener("click", stopTimer);
+
+// Initialize Zoom SDK with retry
+initializeZoomSdk();
 
 function setPreset(seconds) {
   console.log("Setting preset to", seconds, "seconds");
   document.getElementById("timeInput").value = seconds;
+  document.getElementById("status").textContent = `Preset set to ${seconds} seconds`;
 }
 
 function startTimer() {
   console.log("Start Timer clicked");
+  document.getElementById("status").textContent = "Starting timer...";
   const timeInput = document.getElementById("timeInput").value;
   const audioUrl = document.getElementById("audioUrl").value;
 
@@ -61,13 +90,14 @@ function startTimer() {
         console.error("Error playing audio:", err);
         document.getElementById("status").textContent = "Error playing audio: " + err.message;
       });
-      // Notify Zoom app event
-      zoomSdk.callZoomApi("notifyAppEvent", {
-        event: "timer_finished",
-        data: { message: "Timer reached zero and audio played" }
-      }).catch(err => {
-        console.error("Error notifying Zoom event:", err);
-      });
+      if (typeof zoomSdk !== "undefined") {
+        zoomSdk.callZoomApi("notifyAppEvent", {
+          event: "timer_finished",
+          data: { message: "Timer reached zero and audio played" }
+        }).catch(err => {
+          console.error("Error notifying Zoom event:", err);
+        });
+      }
     }
   }, 1000);
 }
