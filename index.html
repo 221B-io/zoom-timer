@@ -1,11 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com 'unsafe-inline'; media-src https:; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="no-referrer">
   <title>Zoom Timer with Custom Song</title>
-  <script type="text/javascript" nonce="be9639d2ac3f4cb5a11cadcc545" src="//local.adguard.org?ts=1753129226056&amp;type=content-script&amp;dmn=assets.grok.com&amp;url=https%3A%2F%2Fassets.grok.com%2Fusers%2Fe01b5bc2-ccd0-4f55-a384-086eade232fe%2F9f49b0e4-8829-4172-bf41-5c205939934d%2Fcontent&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="be9639d2ac3f4cb5a11cadcc545" src="//local.adguard.org?ts=1753129226056&amp;name=AdGuard%20Extra%20%28Beta%29&amp;name=AdGuard%20Popup%20Blocker%20%28Beta%29&amp;type=user-script"></script><script src="https://unpkg.com/@zoom/zoom-apps-sdk@0.16.11/dist/zoomus-websdk.umd.min.js"></script>
+  <script src="https://unpkg.com/@zoom/zoom-apps-sdk@0.16.11/dist/zoomus-websdk.umd.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -105,7 +106,7 @@
 
       // Set timer
       timeLeft = parseInt(timeInput);
-      updateTimerDisplay();
+      updateTimerDisplay;();
       timer = setInterval(() => {
         timeLeft--;
         updateTimerDisplay();
@@ -143,5 +144,5 @@
         `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
     }
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'962d8f6bac93eaef',t:'MTc1MzEzMDkxNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
