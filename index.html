@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; media-src https:; style-src 'self'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; media-src https: https://archive.org; style-src 'self'; object-src 'none'">
   <meta name="referrer" content="no-referrer">
   <title>Zoom Timer with Custom Song</title>
-  <script src="https://unpkg.com/@zoom/zoom-apps-sdk@latest/dist/zoomus-websdk.umd.min.js"></script>
+  <script src="https://unpkg.com/@zoom/zoom-apps-sdk@0.16.11/dist/zoomus-websdk.umd.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -18,20 +18,29 @@
       font-size: 48px;
       margin: 20px 0;
     }
-    input, button {
+    input, select, button {
       margin: 10px;
       padding: 10px;
       font-size: 16px;
     }
     button {
-      background-color: #2D8CFF;
-      color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #1a73e8;
+    #timerButton.start {
+      background-color: #28a745;
+      color: white;
+    }
+    #timerButton.stop {
+      background-color: #dc3545;
+      color: white;
+    }
+    #timerButton:hover.start {
+      background-color: #218838;
+    }
+    #timerButton:hover.stop {
+      background-color: #c82333;
     }
     #status {
       color: red;
@@ -39,6 +48,9 @@
     }
     .preset-buttons {
       margin: 10px 0;
+    }
+    #customAudioUrl {
+      display: none;
     }
   </style>
 </head>
@@ -53,13 +65,20 @@
     <button id="preset1Min">1 Minute</button>
   </div>
   <div>
-    <label for="audioUrl">Audio URL (MP3):</label>
-    <input type="text" id="audioUrl" placeholder="Enter public MP3 URL" value="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+    <label for="audioUrl">Select Song:</label>
+    <select id="audioUrl">
+      <option value="https://archive.org/download/tvtunes_6921/Deliverance%20-%20Dueling%20Banjos.mp3">Dueling Banjos</option>
+      <option value="https://archive.org/download/HollywoodSquares1969-1979ThemeMusic/hstvedit.mp3.mp3">Hollywood Squares</option>
+      <option value="https://archive.org/download/EyeOfTiger/Survivor-EyeOfTheTigermp3-codes1.com_64kb.mp3">Eye of the Tiger</option>
+      <option value="custom">Custom URL</option>
+    </select>
   </div>
-  <button id="startTimer">Start Timer</button>
-  <button id="stopTimer">Stop Timer</button>
+  <div>
+    <input type="text" id="customAudioUrl" placeholder="Enter custom MP3 URL">
+  </div>
+  <button id="timerButton" class="start">Start Timer</button>
   <div id="timerDisplay">00:00</div>
-  3<div id="status">Loading app...</div>
+  <div id="status">Loading app...</div>
   <script src="script.js"></script>
 </body>
 </html>
