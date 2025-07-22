@@ -56,7 +56,7 @@ function initializeZoomSdk(attempts = 10, delay = 2000) {
       setTimeout(() => initializeZoomSdk(attempts - 1, delay), delay);
     } else {
       console.error("Zoom SDK not available after retries");
-      document.getElementById("status").textContent = "Error: Zoom SDK not available. Please check Zoom App Marketplace configuration.";
+      document.getElementById("status").textContent = "Error: Zoom SDK not available. This app must be run within a Zoom meeting. Please ensure the app is installed and the meeting supports apps.";
     }
     return;
   }
