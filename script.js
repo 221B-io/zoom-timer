@@ -98,8 +98,13 @@ document.getElementById("preset2Min").addEventListener("click", () => setPreset(
 document.getElementById("preset1Min").addEventListener("click", () => setPreset(60));
 document.getElementById("timerButton").addEventListener("click", toggleTimer);
 
-// Initialize Zoom SDK
-initializeZoomSdk();
+// Initialize Zoom SDK after DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  // Give the SDK a moment to load
+  setTimeout(() => {
+    initializeZoomSdk();
+  }, 100);
+});
 
 function setPreset(seconds) {
   console.log("Setting preset to", seconds, "seconds");

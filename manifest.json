@@ -1,0 +1,23 @@
+{
+  "name": "Zoom Timer with Custom Song",
+  "version": "1.0.0",
+  "description": "A timer app for Zoom meetings with custom audio notifications",
+  "main": "index.html",
+  "type": "meeting",
+  "capabilities": {
+    "notifyAppEvent": true,
+    "postMessage": true,
+    "onMessage": true,
+    "setVideoFilter": true,
+    "getUserContext": true
+  },
+  "permissions": [
+    "audio"
+  ],
+  "entryPoints": [
+    {
+      "type": "meeting",
+      "url": "index.html"
+    }
+  ]
+} 
